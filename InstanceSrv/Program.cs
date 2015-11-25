@@ -18,12 +18,14 @@ namespace InstanceSrv
                 if (srv.Pending()) {
                     var client = srv.AcceptTcpClient();
                     Console.WriteLine("Connected to someone!");
-                    var buffer = new byte[1000];
+                    var buffer = new byte[1];
                     while (true) {
                         NetworkStream streamclient = client.GetStream();
                         streamclient.Read(buffer, 0, buffer.Length);
                         var datarecieved = System.Text.Encoding.ASCII.GetString(buffer);
-                        Console.WriteLine(datarecieved);
+                        //datarecieved.IndexOf(.Remove();
+                        Console.Write(datarecieved);
+                        streamclient.Flush();
                     }
                 }
             }

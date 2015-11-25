@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -27,14 +28,20 @@ namespace Instance
             InitializeComponent();
         }
 
-        public TcpClient client = new TcpClient();
+        public static TcpClient client = new TcpClient();
 
         private void button_Click(object sender, RoutedEventArgs e) {
             var message = IpInput.Text;
+            string ip = "";
+            if (DEBUGIPCHECK.IsChecked.Value) {
+                ip = "172.26.0.255";
+            }
+            else {
+                ip = IpInput.Text;
+            }
 
-            
             try {
-                client.Connect((IPAddress.Parse(IpInput.Text)), 1337);
+                client.Connect((IPAddress.Parse(ip)), 1337);
             }
             catch (Exception) {
                 MessageBox.Show("Invalid IP");
@@ -65,15 +72,33 @@ namespace Instance
 
         private void SendBtn_Click(object sender, RoutedEventArgs e)
         {
-            NetworkStream streamclient = client.GetStream();
-            byte[] sendBytes = Encoding.ASCII.GetBytes(ChatInput.Text);
+            TrySend(ChatInput.Text);
+        }
 
-            streamclient.Write(sendBytes, 0, sendBytes.Length);
+        private static void TrySend(string str) {
+            try
+            {
+                NetworkStream streamclient = client.GetStream();
+                byte[] sendBytes = Encoding.ASCII.GetBytes(str);
+
+                streamclient.Write(sendBytes, 0, sendBytes.Length);
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("Can't connect to server (this is bad)");
+            }
         }
 
         private void DisconnectBtn_Click(object sender, RoutedEventArgs e)
         {
             client.Close();
+        }
+
+        private void button_Click_1(object sender, RoutedEventArgs e) {
+            for (int i = 0; i < 100; i++) {
+                TrySend(Properties.Resources.ThousandChars);
+            }
+            
         }
     }
 }
