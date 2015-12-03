@@ -9,23 +9,30 @@
                       WindowStartupLocation="CenterScreen">
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
-            <Button x:Name="LoginBtn" Click="LoginBtn_Click">
-                <TextBlock Text="Login"></TextBlock>
-            </Button>
-            <Button x:Name="SettingsBtn">
+            <Button x:Name="SettingsBtn" Click="SettingsBtn_Click">
                 <TextBlock Text="Settings"></TextBlock>
             </Button>
-            
+
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
     <Grid Background="#FF252525">
-        <Button x:Name="ConnectBtn" Content="Connect" HorizontalAlignment="Left" Margin="356,34,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
-        <TextBox x:Name="IpInput" HorizontalAlignment="Left" Height="23" Margin="231,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="IP Address" GotFocus="ChatInput_GotFocus"/>
-        <TextBox x:Name="ChatInput" HorizontalAlignment="Left" Height="23" Margin="231,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="SendBtn" Content="Send" HorizontalAlignment="Left" Margin="356,144,0,0" VerticalAlignment="Top" Width="75" Click="SendBtn_Click"/>
-        <Button x:Name="DisconnectBtn" Content="Disconnect" HorizontalAlignment="Left" Margin="436,34,0,0" VerticalAlignment="Top" Width="75" Click="DisconnectBtn_Click" IsEnabled="False"/>
-        <CheckBox x:Name="DEBUGIPCHECK" Content="172.26.0.255" HorizontalAlignment="Left" Margin="231,10,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="button" Content="Send 1 MB" HorizontalAlignment="Left" Margin="326,174,0,0" VerticalAlignment="Top" Width="105" Click="button_Click_1"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="160" MaxWidth="300" MinWidth="150" />
+            <ColumnDefinition Width="1" />
+            <ColumnDefinition x:Name="chatColumn" Width="*" />
+        </Grid.ColumnDefinitions>
+        <GridSplitter Grid.Column="1" Width="1" HorizontalAlignment="Stretch" Background="#FFBE1707" />
+<ListView Grid.Column="0" x:Name="ContactList" BorderBrush="#FF252525" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+            <ListViewItem x:Name="Contact" Height="50">
+                <Grid>
+                    <TextBlock Text="Test Name" Padding="7,5,0,10" FontSize="16" />
+                    <TextBlock Text="8.8.8.8" Padding="7,25,0,0" FontStyle="Italic" Foreground="#FF8D8D8D" />
+                    <Ellipse Fill="#FF00FF23" Width="14" Height="14" Margin="132,18,14,18" />
+                </Grid>
+            </ListViewItem>
+        </ListView>
+        <TextBox  DockPanel.Dock="Right" Grid.Column="2" x:Name="ChatInput" Height="28" Margin="10,286,10,5" TextWrapping="Wrap" VerticalAlignment="Center"/>
+        <TextBox Grid.Column="2" x:Name="textBox" Height="271" Margin="10,10,10,38" TextWrapping="Wrap" VerticalAlignment="Center"/>
     </Grid>
 
 </Controls:MetroWindow>

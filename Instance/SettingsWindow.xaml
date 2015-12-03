@@ -1,0 +1,18 @@
+﻿<Controls:MetroWindow x:Class="Instance.SettingsWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      Title="Settings" 
+                      Height="314.706" 
+                      Width="305.969"
+                      GlowBrush="{DynamicResource AccentColorBrush}"
+                      WindowStartupLocation="CenterScreen">
+
+    <Grid Background="#FF252525">
+        <Label x:Name="label" Content="Accent Colour:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="RedRadio" Content="Red" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="GreenRadio" Content="Green" HorizontalAlignment="Left" Margin="10,82,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="BlueRadio" Content="Blue" HorizontalAlignment="Left" Margin="10,59,0,0" VerticalAlignment="Top" Checked="BlueRadio_Checked"/>
+    </Grid>
+
+</Controls:MetroWindow>

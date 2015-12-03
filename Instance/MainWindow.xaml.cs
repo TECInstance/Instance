@@ -17,48 +17,48 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 
+
+
 namespace Instance {
-    /// <summary>
-    ///     Interaction logic for MainWindow.xaml
-    /// </summary>
+    
+
     public partial class MainWindow {
         public static TcpClient Client = new TcpClient();
+        public static bool IsLocked = true;
+        public static string InstanceIp = GetLocalIpAddress();
+        public static string username;
 
         public MainWindow() {
+            var loginWindow = new LoginWindow();
+            Hide();
+            loginWindow.Show();
+
             InitializeComponent();
+
+            loginWindow.Closed += delegate {
+                if (loginWindow.LoginSuccess) {
+                    Show();
+                }
+                else {
+                    MessageBox.Show("Unresolved authentication - evaded login fail");
+                    Close();
+                }
+            };
+
         }
 
-        private void button_Click(object sender, RoutedEventArgs e) {
-            var message = IpInput.Text;
-            var ip = DEBUGIPCHECK.IsChecked.Value ? "172.26.0.255" : IpInput.Text;
-
-            try {
-                Client.Connect(IPAddress.Parse(ip), 1337);
+        public static void InitializeConnection() {
+            
+            try{
+                Client.Connect(IPAddress.Parse(InstanceIp), 1337);
             }
             catch (Exception) {
-                MessageBox.Show("Invalid IP");
+                MessageBox.Show("Instance Servers seems to be offline, logging in anyway");
             }
 
-            if (Client.Connected) {
-                ConnectBtn.IsEnabled = false;
-                DisconnectBtn.IsEnabled = true;
-                IpInput.IsEnabled = false;
-
-
-                var buffer = new byte[1000];
-
-                var streamclient = Client.GetStream();
-                var sendBytes = Encoding.ASCII.GetBytes("");
-
-                streamclient.Write(sendBytes, 0, sendBytes.Length);
+            if (Client.Connected){
+                TrySend("INSTANCEINIT " + GetLocalIpAddress() + " " + username);
             }
-        }
-
-        private void ChatInput_GotFocus(object sender, RoutedEventArgs e) {
-        }
-
-        private void SendBtn_Click(object sender, RoutedEventArgs e) {
-            TrySend(ChatInput.Text);
         }
 
         private static void TrySend(string str) {
@@ -73,20 +73,20 @@ namespace Instance {
             }
         }
 
-        private void DisconnectBtn_Click(object sender, RoutedEventArgs e) {
-            Client.Close();
-        }
-
-        private void button_Click_1(object sender, RoutedEventArgs e) {
-            for (var i = 0; i < 1000000; i++) {
-                TrySend("0");
-            }
-        }
-
-        private void LoginBtn_Click(object sender, RoutedEventArgs e)
+        public static string GetLocalIpAddress()
         {
-            var _loginWindow = new LoginWindow();
-            _loginWindow.Show();
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList.Where(ip => ip.AddressFamily == AddressFamily.InterNetwork))
+            {
+                return ip.ToString();
+            }
+            throw new Exception("Local IP Address Not Found!");
+        }
+
+        private void SettingsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var settingsWindow = new SettingsWindow();
+            settingsWindow.Show();
         }
     }
 }

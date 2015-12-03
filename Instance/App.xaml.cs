@@ -11,7 +11,10 @@ namespace Instance
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
-    {
+    public partial class App {
+        public void ChangeTheme(Uri uri)
+        {
+
+        }
     }
 }

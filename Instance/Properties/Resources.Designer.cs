@@ -77,5 +77,50 @@ namespace Instance.Properties {
                 return ResourceManager.GetString("ThousandChars", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to pack://application:,,,/MahApps.Metro;component/Styles/Accents/Red.xaml.
+        /// </summary>
+        internal static string uri0 {
+            get {
+                return ResourceManager.GetString("uri0", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml.
+        /// </summary>
+        internal static string uri1 {
+            get {
+                return ResourceManager.GetString("uri1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml.
+        /// </summary>
+        internal static string uri2 {
+            get {
+                return ResourceManager.GetString("uri2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml.
+        /// </summary>
+        internal static string uri3 {
+            get {
+                return ResourceManager.GetString("uri3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml.
+        /// </summary>
+        internal static string uri4 {
+            get {
+                return ResourceManager.GetString("uri4", resourceCulture);
+            }
+        }
     }
 }
