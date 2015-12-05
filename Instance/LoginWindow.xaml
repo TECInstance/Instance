@@ -10,8 +10,8 @@
                       WindowStartupLocation="CenterScreen">
     <Grid Background="#FF252525">
         <Button x:Name="LoginBtn" Style="{DynamicResource SquareButtonStyle}" Content="login" Margin="58,207,59,0" VerticalAlignment="Top" Height="31" Click="LoginBtn_Click" BorderThickness="1"/>
-        <TextBox x:Name="UsernameText" Height="23" Margin="38,136,38,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="asdf"/>
-        <PasswordBox x:Name="PasswordText" Margin="38,170,38,0" VerticalAlignment="Top" Password="asdf"/>
+        <TextBox x:Name="UsernameText" Height="23" Margin="38,136,38,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="TestUser" TextChanged="UsernameText_TextChanged"/>
+        <PasswordBox x:Name="PasswordText" Margin="38,170,38,0" VerticalAlignment="Top" Password="password"/>
         <Image x:Name="Image" Height="106" Margin="38,15,38,0" VerticalAlignment="Top" Source="InstanceLogocropsmall.png"/>
 
     </Grid>

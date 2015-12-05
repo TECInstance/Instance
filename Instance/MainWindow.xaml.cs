@@ -29,14 +29,14 @@ namespace Instance {
         public static string username;
 
         public MainWindow() {
-            var loginWindow = new LoginWindow();
+            var _loginWindow = new LoginWindow();
             Hide();
-            loginWindow.Show();
+            _loginWindow.Show();
 
             InitializeComponent();
 
-            loginWindow.Closed += delegate {
-                if (loginWindow.LoginSuccess) {
+            _loginWindow.Closed += delegate {
+                if (_loginWindow.LoginSuccess) {
                     Show();
                 }
                 else {
@@ -61,12 +61,12 @@ namespace Instance {
             }
         }
 
-        private static void TrySend(string str) {
+        private static void TrySend(string _str) {
             try {
-                var streamclient = Client.GetStream();
-                var sendBytes = Encoding.ASCII.GetBytes(str);
+                var _streamclient = Client.GetStream();
+                var _sendBytes = Encoding.ASCII.GetBytes(_str);
 
-                streamclient.Write(sendBytes, 0, sendBytes.Length);
+                _streamclient.Write(_sendBytes, 0, _sendBytes.Length);
             }
             catch (Exception) {
                 Debug.WriteLine("Can't connect to server (this is bad)");
@@ -75,18 +75,18 @@ namespace Instance {
 
         public static string GetLocalIpAddress()
         {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (var ip in host.AddressList.Where(ip => ip.AddressFamily == AddressFamily.InterNetwork))
+            var _host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var _ip in _host.AddressList.Where(ip => ip.AddressFamily == AddressFamily.InterNetwork))
             {
-                return ip.ToString();
+                return _ip.ToString();
             }
             throw new Exception("Local IP Address Not Found!");
         }
 
         private void SettingsBtn_Click(object sender, RoutedEventArgs e)
         {
-            var settingsWindow = new SettingsWindow();
-            settingsWindow.Show();
+            var _settingsWindow = new SettingsWindow();
+            _settingsWindow.Show();
         }
     }
 }

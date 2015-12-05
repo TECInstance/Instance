@@ -39,19 +39,19 @@ namespace Instance {
             }
         }
 
-        public bool AuthenticateLogin(string username, string password) {
-            var hash = GetHash(password);
-            const string connectionString = @"Data Source=80.198.77.171,1337; Initial Catalog=Instance; User Id = InstanceLogin; Password = password";
+        public bool AuthenticateLogin(string _username, string _password) {
+            var _hash = GetHash(_password);
+            const string _connectionString = @"Data Source=80.198.77.171,1337; Initial Catalog=Instance; User Id = InstanceLogin; Password = password";
 
-            using (var con = new SqlConnection(connectionString)) {
-                var dt = new DataTable();
-                con.Open();
+            using (var _con = new SqlConnection(_connectionString)) {
+                var _dt = new DataTable();
+                _con.Open();
 
-                var command = new SqlCommand("select * from logins", con);
-                var dr = command.ExecuteReader();
-                dt.Load(dr);
+                var _command = new SqlCommand("select * from logins", _con);
+                var _dr = _command.ExecuteReader();
+                _dt.Load(_dr);
 
-                if (dt.Rows.Cast<DataRow>().Where(variable => variable.Field<string>("usernames") == username).Any(variable => variable.Field<string>("passwords") == hash)) {
+                if (_dt.Rows.Cast<DataRow>().Where(variable => variable.Field<string>("usernames") == _username).Any(variable => variable.Field<string>("passwords") == _hash)) {
                     MainWindow.username = UsernameText.Text.ToLower();
                     return true;
                 }
@@ -59,16 +59,16 @@ namespace Instance {
             }
         }
 
-        public static string GetHash(string inputString) {
-            using (var sha1 = new SHA1Managed()) {
-                var hash = sha1.ComputeHash(Encoding.UTF8.GetBytes(inputString));
-                var sb = new StringBuilder(hash.Length*2);
+        public static string GetHash(string _inputString) {
+            using (var _sha1 = new SHA1Managed()) {
+                var _hash = _sha1.ComputeHash(Encoding.UTF8.GetBytes(_inputString));
+                var _sb = new StringBuilder(_hash.Length*2);
 
-                foreach (var b in hash) {
-                    sb.Append(b.ToString("X2"));
+                foreach (var _b in _hash) {
+                    _sb.Append(_b.ToString("X2"));
                 }
 
-                return sb.ToString();
+                return _sb.ToString();
             }
         }
     }

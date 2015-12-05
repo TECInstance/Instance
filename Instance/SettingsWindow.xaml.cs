@@ -12,8 +12,8 @@ namespace Instance {
         }
 
         private void BlueRadio_Checked(object sender, RoutedEventArgs e) {
-            var app = Application.Current as App;
-            app.ChangeTheme(new Uri(@"pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml"));
+            var _app = Application.Current as App;
+            _app.ChangeTheme(new Uri(@"pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml"));
         }
     }
 }

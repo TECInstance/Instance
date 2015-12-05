@@ -7,23 +7,23 @@ using System.Text;
 namespace InstanceSrv {
     internal class Program {
         private static void Main() {
-            var srv = new TcpListener(IPAddress.Parse(GetLocalIpAddress()), 1337);
-            srv.Start();
+            var _srv = new TcpListener(IPAddress.Parse(GetLocalIpAddress()), 1337);
+            _srv.Start();
             Console.WriteLine("Started listening on [{0}]", GetLocalIpAddress());
             while (true) {
-                if (srv.Pending()) {
-                    var client = srv.AcceptTcpClient();
+                if (_srv.Pending()) {
+                    var _client = _srv.AcceptTcpClient();
                     Console.WriteLine("Connected!");
-                    var buffer = new byte[1];
+                    var _buffer = new byte[1];
                     Console.WriteLine("Waiting for client activity...");
                     while (true) {
-                        if (!client.Connected) {
+                        if (!_client.Connected) {
                             break;
                         }
-                        var streamclient = client.GetStream();
-                        streamclient.Read(buffer, 0, buffer.Length);
-                        var datarecieved = Encoding.ASCII.GetString(buffer);
-                        Console.Write(datarecieved);
+                        var _streamclient = _client.GetStream();
+                        _streamclient.Read(_buffer, 0, _buffer.Length);
+                        var _datarecieved = Encoding.ASCII.GetString(_buffer);
+                        Console.Write(_datarecieved);
                         //streamclient.Close();
                     }
                 }
@@ -31,9 +31,9 @@ namespace InstanceSrv {
         }
 
         public static string GetLocalIpAddress() {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (var ip in host.AddressList.Where(ip => ip.AddressFamily == AddressFamily.InterNetwork)) {
-                return ip.ToString();
+            var _host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var _ip in _host.AddressList.Where(ip => ip.AddressFamily == AddressFamily.InterNetwork)) {
+                return _ip.ToString();
             }
             throw new Exception("Local IP Address Not Found!");
         }
