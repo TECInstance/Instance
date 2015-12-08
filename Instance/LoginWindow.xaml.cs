@@ -22,18 +22,92 @@ namespace Instance {
 
     public partial class LoginWindow {
         public bool LoginSuccess;
+        public bool UsernameRemembrance;
 
-        public LoginWindow() {
+        public LoginWindow()
+        {
+
+            var test = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "UsernameRemembrance.txt");
+            if (File.Exists(test))
+            {
+                var rememberfileName = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "UsernameRemembrance.txt");
+                using (System.IO.StreamReader readfile = new System.IO.StreamReader(rememberfileName))
+                {
+                    if (readfile.ReadLine() == "true")
+                    {
+                        UsernameRemembrance = true;
+                    }
+                    else
+                    {
+                        UsernameRemembrance = false;
+                    }
+                }
+            }
+
             InitializeComponent();
+
+            if (UsernameRemembrance == true)
+            {
+                RememberUserCheck.IsChecked = true;
+                var userfileName = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RememberedUser.txt");
+                using (System.IO.StreamReader readfile = new System.IO.StreamReader(userfileName))
+                {
+                    UsernameText.Text = readfile.ReadLine();
+                }
+            }
+            else
+            {
+                RememberUserCheck.IsChecked = false;
+                UsernameText.Text = "Username";
+            }
         }
 
-        private void LoginBtn_Click(object sender, RoutedEventArgs e) {
-            if (AuthenticateLogin(UsernameText.Text, PasswordText.Password)) {
+        private void LoginBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+            if (RememberUserCheck.IsChecked == true)
+            {
+                var rememberfileName = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "UsernameRemembrance.txt");
+                using (System.IO.StreamWriter writefile = new System.IO.StreamWriter(rememberfileName))
+                {
+                    //if the file doesn't exist, create it
+                    if (!File.Exists(rememberfileName))
+                        File.Create(rememberfileName);
+
+                    writefile.WriteLine("true");
+                }
+
+                var userfileName = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RememberedUser.txt");
+                using (System.IO.StreamWriter writefile = new System.IO.StreamWriter(userfileName))
+                {
+                    //if the file doesn't exist, create it
+                    if (!File.Exists(userfileName))
+                        File.Create(userfileName);
+
+                    writefile.WriteLine(UsernameText.Text);
+                }
+            }
+            else if (RememberUserCheck.IsChecked == false)
+            {
+                var rememberfileName = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "UsernameRemembrance.txt");
+                using (System.IO.StreamWriter writefile = new System.IO.StreamWriter(rememberfileName))
+                {
+                    //if the file doesn't exist, create it
+                    if (!File.Exists(rememberfileName))
+                        File.Create(rememberfileName);
+
+                    writefile.WriteLine("false");
+                }
+            }
+
+            if (AuthenticateLogin(UsernameText.Text, PasswordText.Password))
+            {
                 LoginSuccess = true;
                 MainWindow.InitializeConnection();
                 Close();
             }
-            else {
+            else
+            {
                 //TODO FIND PRETTIER SOLUTION
                 MessageBox.Show("Username and password does not seem to be valid");
             }
