@@ -39,11 +39,11 @@ namespace Instance {
             }
         }
 
-        public bool AuthenticateLogin(string _username, string _password) {
-            var _hash = GetHash(_password);
-            const string _connectionString = @"Data Source=80.198.77.171,1337; Initial Catalog=Instance; User Id = InstanceLogin; Password = password";
+        public bool AuthenticateLogin(string username, string password) {
+            var _hash = GetHash(password);
+            const string connectionString = @"Data Source=80.198.77.171,1337; Initial Catalog=Instance; User Id = InstanceLogin; Password = password";
 
-            using (var _con = new SqlConnection(_connectionString)) {
+            using (var _con = new SqlConnection(connectionString)) {
                 var _dt = new DataTable();
                 _con.Open();
 
@@ -51,17 +51,17 @@ namespace Instance {
                 var _dr = _command.ExecuteReader();
                 _dt.Load(_dr);
 
-                if (_dt.Rows.Cast<DataRow>().Where(variable => variable.Field<string>("usernames") == _username).Any(variable => variable.Field<string>("passwords") == _hash)) {
-                    MainWindow.username = UsernameText.Text.ToLower();
+                if (_dt.Rows.Cast<DataRow>().Where(variable => variable.Field<string>("usernames") == username).Any(variable => variable.Field<string>("passwords") == _hash)) {
+                    MainWindow.Username = UsernameText.Text.ToLower();
                     return true;
                 }
                 return false;
             }
         }
 
-        public static string GetHash(string _inputString) {
+        public static string GetHash(string inputString) {
             using (var _sha1 = new SHA1Managed()) {
-                var _hash = _sha1.ComputeHash(Encoding.UTF8.GetBytes(_inputString));
+                var _hash = _sha1.ComputeHash(Encoding.UTF8.GetBytes(inputString));
                 var _sb = new StringBuilder(_hash.Length*2);
 
                 foreach (var _b in _hash) {
@@ -70,6 +70,16 @@ namespace Instance {
 
                 return _sb.ToString();
             }
+        }
+
+        private void UsernameText_GotFocus(object sender, RoutedEventArgs e)
+        {
+            UsernameText.SelectAll();
+        }
+
+        private void PasswordText_GotFocus(object sender, RoutedEventArgs e)
+        {
+            PasswordText.SelectAll();
         }
     }
 }
