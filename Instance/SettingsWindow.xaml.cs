@@ -80,7 +80,7 @@ namespace Instance {
         {
             ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent("Indigo"), ThemeManager.GetAppTheme("BaseDark"));
             DivBrush = GlowBrush;
-        }
+        } 
 
         private void VioletTile_Clicked(object sender, RoutedEventArgs e)
         {
