@@ -87,7 +87,12 @@ namespace Instance {
 
             using (var _con = new SqlConnection(connectionString)) {
                 var _dt = new DataTable();
-                _con.Open();
+                try {
+                    _con.Open();
+                }
+                catch (Exception) {
+                    MessageBox.Show("Connection failed");
+                }
 
                 var _command = new SqlCommand("select * from logins", _con);
                 var _dr = _command.ExecuteReader();

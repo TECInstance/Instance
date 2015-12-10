@@ -1,77 +1,139 @@
 ﻿using System;
+using System.Linq;
 using System.Windows;
 using System.Windows.Media;
+using MahApps.Metro;
 
 namespace Instance {
     /// <summary>
     ///     Interaction logic for SettingsWindow.xaml
     /// </summary>
     public partial class SettingsWindow {
+        public static Brush DivBrush;
+
         public SettingsWindow() {
             InitializeComponent();
+            
+            
         }
 
-        private void RedRadio_Checked(object sender, RoutedEventArgs e) {
-            Application.Current.Resources.MergedDictionaries.Clear();
-            MainWindow.DividerBrush = (Brush) new BrushConverter().ConvertFrom("BE1707");
+        
 
-            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary {
-                Source = new Uri("/MahApps.Metro;component/Styles/Controls.xaml", UriKind.RelativeOrAbsolute)
-            });
-            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary {
-                Source = new Uri("/MahApps.Metro;component/Styles/Fonts.xaml", UriKind.RelativeOrAbsolute)
-            });
-            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary {
-                Source = new Uri("/MahApps.Metro;component/Styles/Colors.xaml", UriKind.RelativeOrAbsolute)
-            });
-            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary {
-                Source = new Uri("/MahApps.Metro;component/Styles/Accents/Red.xaml", UriKind.RelativeOrAbsolute)
-            });
-            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary {
-                Source = new Uri("/MahApps.Metro;component/Styles/Accents/BaseDark.xaml", UriKind.RelativeOrAbsolute)
-            });
+        private void RedTile_Clicked(object sender, RoutedEventArgs e) {
+            ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent("Red"), ThemeManager.GetAppTheme("BaseDark"));
+            DivBrush = GlowBrush;
         }
 
-        private void BlueRadio_Checked(object sender, RoutedEventArgs e) {
-            Application.Current.Resources.MergedDictionaries.Clear();
-            MainWindow.DividerBrush = (Brush)new BrushConverter().ConvertFrom("BE1707");
-
-            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary {
-                Source = new Uri("/MahApps.Metro;component/Styles/Controls.xaml", UriKind.RelativeOrAbsolute)
-            });
-            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary {
-                Source = new Uri("/MahApps.Metro;component/Styles/Fonts.xaml", UriKind.RelativeOrAbsolute)
-            });
-            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary {
-                Source = new Uri("/MahApps.Metro;component/Styles/Colors.xaml", UriKind.RelativeOrAbsolute)
-            });
-            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary {
-                Source = new Uri("/MahApps.Metro;component/Styles/Accents/Blue.xaml", UriKind.RelativeOrAbsolute)
-            });
-            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary {
-                Source = new Uri("/MahApps.Metro;component/Styles/Accents/BaseDark.xaml", UriKind.RelativeOrAbsolute)
-            });
+        private void GreenTile_Clicked(object sender, RoutedEventArgs e) {
+            ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent("Green"), ThemeManager.GetAppTheme("BaseDark"));
+            DivBrush = GlowBrush;
         }
 
-        private void GreenRadio_Checked(object sender, RoutedEventArgs e) {
-            Application.Current.Resources.MergedDictionaries.Clear();
-            MainWindow.DividerBrush = (Brush)new BrushConverter().ConvertFrom("BE1707");
+        private void BlueTile_Clicked(object sender, RoutedEventArgs e) {
+            ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent("Blue"), ThemeManager.GetAppTheme("BaseDark"));
+            DivBrush = GlowBrush;
+        }
 
-            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary {
-                Source = new Uri("/MahApps.Metro;component/Styles/Controls.xaml", UriKind.RelativeOrAbsolute)
-            });
-            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary {
-                Source = new Uri("/MahApps.Metro;component/Styles/Fonts.xaml", UriKind.RelativeOrAbsolute)
-            });
-            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary {
-                Source = new Uri("/MahApps.Metro;component/Styles/Colors.xaml", UriKind.RelativeOrAbsolute)
-            });
-            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary {
-                Source = new Uri("/MahApps.Metro;component/Styles/Accents/Green.xaml", UriKind.RelativeOrAbsolute)
-            });
-            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary {
-                Source = new Uri("/MahApps.Metro;component/Styles/Accents/BaseDark.xaml", UriKind.RelativeOrAbsolute)
-            });
+        private void PurpleTile_Clicked(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent("Purple"), ThemeManager.GetAppTheme("BaseDark"));
+            DivBrush = GlowBrush;
+        }
+
+        private void OrangeTile_Clicked(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent("Orange"), ThemeManager.GetAppTheme("BaseDark"));
+            DivBrush = GlowBrush;
+        }
+
+        private void LimeTile_Clicked(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent("Lime"), ThemeManager.GetAppTheme("BaseDark"));
+            DivBrush = GlowBrush;
+        }
+
+        private void EmeraldTile_Clicked(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent("Emerald"), ThemeManager.GetAppTheme("BaseDark"));
+            DivBrush = GlowBrush;
+        }
+
+        private void TealTile_Clicked(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent("Teal"), ThemeManager.GetAppTheme("BaseDark"));
+            DivBrush = GlowBrush;
+        }
+
+        private void CyanTile_Clicked(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent("Cyan"), ThemeManager.GetAppTheme("BaseDark"));
+            DivBrush = GlowBrush;
+        }
+
+        private void CobaltTile_Clicked(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent("Cobalt"), ThemeManager.GetAppTheme("BaseDark"));
+            DivBrush = GlowBrush;
+        }
+
+        private void IndigoTile_Clicked(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent("Indigo"), ThemeManager.GetAppTheme("BaseDark"));
+            DivBrush = GlowBrush;
+        }
+
+        private void VioletTile_Clicked(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent("Violet"), ThemeManager.GetAppTheme("BaseDark"));
+            DivBrush = GlowBrush;
+        }
+
+        private void PinkTile_Clicked(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent("Pink"), ThemeManager.GetAppTheme("BaseDark"));
+            DivBrush = GlowBrush;
+        }
+
+        private void MagentaTile_Clicked(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent("Magenta"), ThemeManager.GetAppTheme("BaseDark"));
+            DivBrush = GlowBrush;
+        }
+
+        private void CrimsonTile_Clicked(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent("Crimson"), ThemeManager.GetAppTheme("BaseDark"));
+            DivBrush = GlowBrush;
+        }
+
+        private void AmberTile_Clicked(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent("Amber"), ThemeManager.GetAppTheme("BaseDark"));
+            DivBrush = GlowBrush;
+        }
+
+        private void YellowTile_Clicked(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent("Yellow"), ThemeManager.GetAppTheme("BaseDark"));
+            DivBrush = GlowBrush;
+        }
+
+        private void BrownTile_Clicked(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent("Brown"), ThemeManager.GetAppTheme("BaseDark"));
+            DivBrush = GlowBrush;
+        }
+
+        private void OliveTile_Clicked(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent("Olive"), ThemeManager.GetAppTheme("BaseDark"));
+            DivBrush = GlowBrush;
+        }
+
+        private void SteelTile_Clicked(object sender, RoutedEventArgs e)
+        {
+            ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent("Steel"), ThemeManager.GetAppTheme("BaseDark"));
+            DivBrush = GlowBrush;
         }
     }
 }

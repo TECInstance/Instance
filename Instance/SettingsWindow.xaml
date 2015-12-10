@@ -3,16 +3,34 @@
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                       Title="Settings" 
-                      Height="314.706" 
-                      Width="305.969"
+                      Height="298" 
+                      Width="298"
                       GlowBrush="{DynamicResource AccentColorBrush}"
                       WindowStartupLocation="CenterScreen">
 
     <Grid Background="#FF252525">
-        <Label x:Name="label" Content="Accent Colour:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="RedRadio" Content="Red" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Checked="RedRadio_Checked"/>
-        <RadioButton x:Name="GreenRadio" Content="Green" HorizontalAlignment="Left" Margin="10,82,0,0" VerticalAlignment="Top" Checked="GreenRadio_Checked"/>
-        <RadioButton x:Name="BlueRadio" Content="Blue" HorizontalAlignment="Left" Margin="10,59,0,0" VerticalAlignment="Top" Checked="BlueRadio_Checked"/>
+        <Label x:Name="label" Content="Accent Colour:" HorizontalAlignment="Left" Margin="10,9,0,0" VerticalAlignment="Top"/>
+        <Controls:Tile x:Name="RedTile" Height="50" Width="50" Margin="10,43,230,174" Click="RedTile_Clicked" Background="#E51400"/>
+        <Controls:Tile x:Name="GreenTile" Height="50" Width="50" Margin="64,43,176,174" Click="GreenTile_Clicked" Background="#60A917"/>
+        <Controls:Tile x:Name="BlueTile" Height="50" Width="50" Margin="118,43,122,174" Click="BlueTile_Clicked" Background="#119EDA"/>
+        <Controls:Tile x:Name="PurpleTile" Height="50" Width="50" Margin="172,43,68,174" Click="PurpleTile_Clicked" Background="#6459DF"/>
+        <Controls:Tile x:Name="OrangeTile" Height="50" Width="50" Margin="226,43,14,174" Click="OrangeTile_Clicked" Background="#FA6800"/>
+        <Controls:Tile x:Name="LimeTile" Height="50" Width="50" Margin="10,97,230,120" Click="LimeTile_Clicked" Background="#A4C400"/>
+        <Controls:Tile x:Name="EmraldTile" Height="50" Width="50" Margin="64,97,176,120" Click="EmeraldTile_Clicked" Background="#008A00"/>
+        <Controls:Tile x:Name="TealTile" Height="50" Width="50" Margin="118,97,122,120" Click="TealTile_Clicked" Background="#00ABA9"/>
+        <Controls:Tile x:Name="CyanTile" Height="50" Width="50" Margin="172,97,68,120" Click="CyanTile_Clicked" Background="#1BA1E2"/>
+        <Controls:Tile x:Name="CobaltTile" Height="50" Width="50" Margin="226,97,14,120" Click="CobaltTile_Clicked" Background="#0050EF"/>
+        <Controls:Tile x:Name="IndigoTile" Height="50" Width="50" Margin="10,152,230,65" Click="IndigoTile_Clicked" Background="#6A00FF"/>
+        <Controls:Tile x:Name="VioletTile" Height="50" Width="50" Margin="64,152,176,65" Click="VioletTile_Clicked" Background="#AA00FF"/>
+        <Controls:Tile x:Name="PinkTile" Height="50" Width="50" Margin="118,152,122,65" Click="PinkTile_Clicked" Background="#F472D0"/>
+        <Controls:Tile x:Name="MagentaTile" Height="50" Width="50" Margin="172,152,68,65" Click="MagentaTile_Clicked" Background="#D80073"/>
+        <Controls:Tile x:Name="CrimsonTile" Height="50" Width="50" Margin="226,152,14,65" Click="CrimsonTile_Clicked" Background="#A20025"/>
+        <Controls:Tile x:Name="AmberTile" Height="50" Width="50" Margin="10,206,230,11" Click="AmberTile_Clicked" Background="#F0A30A"/>
+        <Controls:Tile x:Name="YellowTile" Height="50" Width="50" Margin="64,206,176,11" Click="YellowTile_Clicked" Background="#FEDE06"/>
+        <Controls:Tile x:Name="BrownTile" Height="50" Width="50" Margin="118,206,122,11" Click="BrownTile_Clicked" Background="#825A2C"/>
+        <Controls:Tile x:Name="OliveTile" Height="50" Width="50" Margin="172,206,68,11" Click="OliveTile_Clicked" Background="#6D8764"/>
+        <Controls:Tile x:Name="SteelTile" Height="50" Width="50" Margin="226,206,14,11" Click="SteelTile_Clicked" Background="#647687"/>
     </Grid>
 
 </Controls:MetroWindow>
+

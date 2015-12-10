@@ -24,8 +24,6 @@ namespace Instance {
         public static bool IsLocked = true;
         public static string InstanceIp = GetLocalIpAddress();
         public static string Username;
-        public static string[] Contacts;
-        public static Brush DividerBrush = (Brush) new BrushConverter().ConvertFrom("BE1707");
 
         public MainWindow() {
             var _loginWindow = new LoginWindow();
@@ -37,6 +35,7 @@ namespace Instance {
             _loginWindow.Closed += delegate {
                 if (_loginWindow.LoginSuccess) {
                     Show();
+                    SettingsWindow.DivBrush = Foreground;
                 }
                 else {
                     MessageBox.Show("Unresolved authentication - evaded login fail");
@@ -85,7 +84,7 @@ namespace Instance {
         }
 
         private void MetroWindow_Activated(object sender, EventArgs e) {
-            Divider.Background = DividerBrush;
+            Divider.Background = SettingsWindow.DivBrush;
         }
 
         private void MetroWindow_Deactivated(object sender, EventArgs e) {
