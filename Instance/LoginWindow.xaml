@@ -9,12 +9,13 @@
                       GlowBrush="{DynamicResource AccentColorBrush}"
                       WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid Background="#FF252525" Margin="0,0,0,-2">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
         <Button x:Name="LoginBtn" Style="{DynamicResource SquareButtonStyle}" Content="login" Margin="57,226,57,0" VerticalAlignment="Top" Height="32" Click="LoginBtn_Click" BorderThickness="1"/>
         <TextBox x:Name="UsernameText" Height="23" Margin="38,133,38,0" TextWrapping="Wrap" VerticalAlignment="Top" Text="TestUser" GotFocus="UsernameText_GotFocus"/>
         <PasswordBox x:Name="PasswordText" Margin="38,167,38,0" VerticalAlignment="Top" Password="password" GotFocus="PasswordText_GotFocus"/>
         <Image x:Name="LogoImage" Height="106" Margin="38,15,38,0" VerticalAlignment="Top" Source="InstanceLogocropsmall.png"/>
         <CheckBox x:Name="RememberUserCheck" Content="Remember username" Margin="45,198,45,0" VerticalAlignment="Top"/>
-
     </Grid>
-
 </Controls:MetroWindow>

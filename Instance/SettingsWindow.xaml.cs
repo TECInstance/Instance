@@ -17,8 +17,6 @@ namespace Instance {
             
         }
 
-        
-
         private void RedTile_Clicked(object sender, RoutedEventArgs e) {
             ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent("Red"), ThemeManager.GetAppTheme("BaseDark"));
             DivBrush = GlowBrush;
