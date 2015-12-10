@@ -1,114 +1,82 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using MahApps.Metro.Controls;
-using MahApps.Metro.Controls.Dialogs;
 
 namespace Instance {
-
     public partial class LoginWindow {
         public bool LoginSuccess;
         public bool UsernameRemembrance;
 
-        public LoginWindow()
-        {
-
-            var test = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "UsernameRemembrance.txt");
-            if (File.Exists(test))
-            {
-                var rememberfileName = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "UsernameRemembrance.txt");
-                using (System.IO.StreamReader readfile = new System.IO.StreamReader(rememberfileName))
-                {
-                    if (readfile.ReadLine() == "true")
-                    {
-                        UsernameRemembrance = true;
-                    }
-                    else
-                    {
-                        UsernameRemembrance = false;
-                    }
+        public LoginWindow() {
+            var _test = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "UsernameRemembrance.txt");
+            if (File.Exists(_test)) {
+                var _rememberfileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "UsernameRemembrance.txt");
+                using (var _readfile = new StreamReader(_rememberfileName)) {
+                    UsernameRemembrance = _readfile.ReadLine() == "true";
                 }
             }
 
             InitializeComponent();
 
-            if (UsernameRemembrance == true)
-            {
+            if (UsernameRemembrance) {
                 RememberUserCheck.IsChecked = true;
-                var userfileName = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RememberedUser.txt");
-                using (System.IO.StreamReader readfile = new System.IO.StreamReader(userfileName))
-                {
-                    UsernameText.Text = readfile.ReadLine();
+                var _userfileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RememberedUser.txt");
+                using (var _readfile = new StreamReader(_userfileName)) {
+                    UsernameText.Text = _readfile.ReadLine();
                 }
             }
-            else
-            {
+            else {
                 RememberUserCheck.IsChecked = false;
                 UsernameText.Text = "Username";
             }
         }
 
-        private void LoginBtn_Click(object sender, RoutedEventArgs e)
-        {
-
-            if (RememberUserCheck.IsChecked == true)
-            {
-                var rememberfileName = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "UsernameRemembrance.txt");
-                using (System.IO.StreamWriter writefile = new System.IO.StreamWriter(rememberfileName))
-                {
+        private void LoginBtn_Click(object sender, RoutedEventArgs e) {
+            if (RememberUserCheck.IsChecked == true) {
+                var _rememberfileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "UsernameRemembrance.txt");
+                using (var _writefile = new StreamWriter(_rememberfileName)) {
                     //if the file doesn't exist, create it
-                    if (!File.Exists(rememberfileName))
-                        File.Create(rememberfileName);
+                    if (!File.Exists(_rememberfileName)) {
+                        File.Create(_rememberfileName);
+                    }
 
-                    writefile.WriteLine("true");
+                    _writefile.WriteLine("true");
                 }
 
-                var userfileName = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RememberedUser.txt");
-                using (System.IO.StreamWriter writefile = new System.IO.StreamWriter(userfileName))
-                {
+                var _userfileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RememberedUser.txt");
+                using (var _writefile = new StreamWriter(_userfileName)) {
                     //if the file doesn't exist, create it
-                    if (!File.Exists(userfileName))
-                        File.Create(userfileName);
+                    if (!File.Exists(_userfileName)) {
+                        File.Create(_userfileName);
+                    }
 
-                    writefile.WriteLine(UsernameText.Text);
+                    _writefile.WriteLine(UsernameText.Text);
                 }
             }
-            else if (RememberUserCheck.IsChecked == false)
-            {
-                var rememberfileName = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "UsernameRemembrance.txt");
-                using (System.IO.StreamWriter writefile = new System.IO.StreamWriter(rememberfileName))
-                {
+            else if (RememberUserCheck.IsChecked == false) {
+                var _rememberfileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "UsernameRemembrance.txt");
+                using (var _writefile = new StreamWriter(_rememberfileName)) {
                     //if the file doesn't exist, create it
-                    if (!File.Exists(rememberfileName))
-                        File.Create(rememberfileName);
+                    if (!File.Exists(_rememberfileName)) {
+                        File.Create(_rememberfileName);
+                    }
 
-                    writefile.WriteLine("false");
+                    _writefile.WriteLine("false");
                 }
             }
 
-            if (AuthenticateLogin(UsernameText.Text, PasswordText.Password))
-            {
+            if (AuthenticateLogin(UsernameText.Text, PasswordText.Password)) {
                 LoginSuccess = true;
                 MainWindow.InitializeConnection();
                 Close();
             }
-            else
-            {
-                //TODO FIND PRETTIER SOLUTION
+            else {
+                //FIND PRETTIER SOLUTION
                 MessageBox.Show("Username and password does not seem to be valid");
             }
         }
@@ -124,7 +92,7 @@ namespace Instance {
                 var _command = new SqlCommand("select * from logins", _con);
                 var _dr = _command.ExecuteReader();
                 _dt.Load(_dr);
-
+                
                 if (_dt.Rows.Cast<DataRow>().Where(variable => variable.Field<string>("usernames") == username).Any(variable => variable.Field<string>("passwords") == _hash)) {
                     MainWindow.Username = UsernameText.Text.ToLower();
                     return true;
@@ -146,13 +114,11 @@ namespace Instance {
             }
         }
 
-        private void UsernameText_GotFocus(object sender, RoutedEventArgs e)
-        {
+        private void UsernameText_GotFocus(object sender, RoutedEventArgs e) {
             UsernameText.SelectAll();
         }
 
-        private void PasswordText_GotFocus(object sender, RoutedEventArgs e)
-        {
+        private void PasswordText_GotFocus(object sender, RoutedEventArgs e) {
             PasswordText.SelectAll();
         }
     }

@@ -10,8 +10,8 @@
 
     <Grid Background="#FF252525">
         <Label x:Name="label" Content="Accent Colour:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="RedRadio" Content="Red" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
-        <RadioButton x:Name="GreenRadio" Content="Green" HorizontalAlignment="Left" Margin="10,82,0,0" VerticalAlignment="Top"/>
+        <RadioButton x:Name="RedRadio" Content="Red" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Checked="RedRadio_Checked"/>
+        <RadioButton x:Name="GreenRadio" Content="Green" HorizontalAlignment="Left" Margin="10,82,0,0" VerticalAlignment="Top" Checked="GreenRadio_Checked"/>
         <RadioButton x:Name="BlueRadio" Content="Blue" HorizontalAlignment="Left" Margin="10,59,0,0" VerticalAlignment="Top" Checked="BlueRadio_Checked"/>
     </Grid>
 

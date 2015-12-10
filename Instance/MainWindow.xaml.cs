@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MahApps.Metro;
 using MahApps.Metro.Controls;
 
 namespace Instance {
@@ -23,6 +24,8 @@ namespace Instance {
         public static bool IsLocked = true;
         public static string InstanceIp = GetLocalIpAddress();
         public static string Username;
+        public static string[] Contacts;
+        public static Brush DividerBrush = (Brush) new BrushConverter().ConvertFrom("BE1707");
 
         public MainWindow() {
             var _loginWindow = new LoginWindow();
@@ -52,6 +55,7 @@ namespace Instance {
 
             if (Client.Connected) {
                 TrySend("INSTANCEINIT " + GetLocalIpAddress() + " " + Username);
+
             }
         }
 
@@ -81,7 +85,7 @@ namespace Instance {
         }
 
         private void MetroWindow_Activated(object sender, EventArgs e) {
-            Divider.Background = (Brush) new BrushConverter().ConvertFrom("#BE1707");
+            Divider.Background = DividerBrush;
         }
 
         private void MetroWindow_Deactivated(object sender, EventArgs e) {
@@ -89,7 +93,6 @@ namespace Instance {
         }
 
         private void ChatInput_KeyDown(object sender, KeyEventArgs e) {
-            ContactList.Items.Add(new User() {Name = "test", Ip = "0.0.0.0", Status = false});
             if (e.Key == Key.Enter && ChatInput.Text != "") {
                 InsertIntoChat(ChatInput.Text);
                 ChatInput.Text = null;
@@ -97,8 +100,8 @@ namespace Instance {
         }
 
         private void InsertIntoChat(string str) {
-            chatText.AppendText("\n" + str);
-            chatText.ScrollToEnd();
+            ChatText.AppendText("\n" + str);
+            ChatText.ScrollToEnd();
         }
 
         private void chatText_TextChanged(object sender, TextChangedEventArgs e)
