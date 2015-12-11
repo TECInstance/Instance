@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Instance.Annotations;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
 
@@ -26,12 +30,14 @@ namespace Instance {
         public static string Username;
         public static Brush DivBrush = (Brush) new BrushConverter().ConvertFrom("#E51400");
 
+
         public MainWindow() {
             var _loginWindow = new LoginWindow();
             Hide();
             _loginWindow.Show();
 
             InitializeComponent();
+            DataContext = new ContactsPresenter();
 
             _loginWindow.Closed += delegate {
                 if (_loginWindow.LoginSuccess) {
@@ -45,6 +51,10 @@ namespace Instance {
             };
         }
 
+        private ContactsPresenter Presenter {
+            get { return (ContactsPresenter) DataContext; }
+        }
+
         public static void InitializeConnection() {
             try {
                 Client.Connect(IPAddress.Parse(InstanceIp), 1337);
@@ -55,7 +65,6 @@ namespace Instance {
 
             if (Client.Connected) {
                 TrySend("INSTANCEINIT " + GetLocalIpAddress() + " " + Username);
-
             }
         }
 
@@ -100,18 +109,43 @@ namespace Instance {
         }
 
         private void InsertIntoChat(string str) {
-            ChatText.AppendText("\n" + str);
+            ChatText.AppendText(str + "\n");
             ChatText.ScrollToEnd();
         }
 
-        private void chatText_TextChanged(object sender, TextChangedEventArgs e)
-        {
+        private void chatText_TextChanged(object sender, TextChangedEventArgs e) {
         }
     }
 
-    public class User {
-        public string Name { get; set; }
-        public string Ip { get; set; }
-        public bool Status { get; set; }
+    public class ContactsPresenter : INotifyPropertyChanged {
+        private readonly ContactsModel ContactsM;
+
+        public ContactsPresenter() {
+            ContactsM = new ContactsModel();
+            ContactNameList.Add("TestUser");
+
+        }
+
+        public ObservableCollection<string> ContactNameList {
+            get { return ContactsM.ContactNameList; }
+        }
+        public ObservableCollection<string> ContactTitleList
+        {
+            get { return ContactsM.ContactTitleList; }
+        }
+        public ObservableCollection<string> ContactStatusList
+        {
+            get { return ContactsM.ContactStatusList; }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+    }
+
+    public class ContactsModel : INotifyPropertyChanged {
+        public ObservableCollection<string> ContactNameList { get; } = new ObservableCollection<string>();
+        public ObservableCollection<string> ContactTitleList { get; } = new ObservableCollection<string>();
+        public ObservableCollection<string> ContactStatusList { get; } = new ObservableCollection<string>();
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }
