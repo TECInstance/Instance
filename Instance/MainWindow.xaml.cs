@@ -22,111 +22,136 @@ using Instance.Annotations;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
 
-namespace Instance {
-    public partial class MainWindow {
+namespace Instance
+{
+    public partial class MainWindow
+    {
         public static TcpClient Client = new TcpClient();
         public static bool IsLocked = true;
         public static string InstanceIp = GetLocalIpAddress();
         public static string Username;
         public static Brush DivBrush = (Brush) new BrushConverter().ConvertFrom("#E51400");
 
-
-        public MainWindow() {
+        public MainWindow()
+        {
             var _loginWindow = new LoginWindow();
             Hide();
             _loginWindow.Show();
-
+            
             InitializeComponent();
+
             DataContext = new ContactsPresenter();
 
-            _loginWindow.Closed += delegate {
-                if (_loginWindow.LoginSuccess) {
+            _loginWindow.Closed += delegate
+            {
+                if (_loginWindow.LoginSuccess)
+                {
                     Show();
                     DivBrush = GlowBrush;
                 }
-                else {
+                else
+                {
                     MessageBox.Show("Unresolved authentication - evaded login fail");
                     Close();
                 }
             };
         }
 
-        private ContactsPresenter Presenter {
-            get { return (ContactsPresenter) DataContext; }
+        private ContactsPresenter Presenter
+        {
+            get { return (ContactsPresenter)DataContext; }
         }
 
-        public static void InitializeConnection() {
-            try {
+        public static void InitializeConnection()
+        {
+            try
+            {
                 Client.Connect(IPAddress.Parse(InstanceIp), 1337);
             }
-            catch (Exception) {
+            catch (Exception)
+            {
                 MessageBox.Show("Instance Servers seems to be offline, logging in anyway");
             }
 
-            if (Client.Connected) {
+            if (Client.Connected)
+            {
                 TrySend("INSTANCEINIT " + GetLocalIpAddress() + " " + Username);
             }
         }
 
-        private static void TrySend(string str) {
-            try {
+        private static void TrySend(string str)
+        {
+            try
+            {
                 var _streamclient = Client.GetStream();
                 var _sendBytes = Encoding.ASCII.GetBytes(str);
 
                 _streamclient.Write(_sendBytes, 0, _sendBytes.Length);
             }
-            catch (Exception) {
+            catch (Exception)
+            {
                 Debug.WriteLine("Can't connect to server (this is bad)");
             }
         }
 
-        public static string GetLocalIpAddress() {
+        public static string GetLocalIpAddress()
+        {
             var _host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (var _ip in _host.AddressList.Where(ip => ip.AddressFamily == AddressFamily.InterNetwork)) {
+            foreach (var _ip in _host.AddressList.Where(ip => ip.AddressFamily == AddressFamily.InterNetwork))
+            {
                 return _ip.ToString();
             }
             throw new Exception("Local IP Address Not Found!");
         }
 
-        private void SettingsBtn_Click(object sender, RoutedEventArgs e) {
+        private void SettingsBtn_Click(object sender, RoutedEventArgs e)
+        {
             var _settingsWindow = new SettingsWindow();
             _settingsWindow.Show();
         }
 
-        private void MetroWindow_Activated(object sender, EventArgs e) {
+        private void MetroWindow_Activated(object sender, EventArgs e)
+        {
             Divider.Background = DivBrush;
         }
 
-        private void MetroWindow_Deactivated(object sender, EventArgs e) {
+        private void MetroWindow_Deactivated(object sender, EventArgs e)
+        {
             Divider.Background = (Brush) new BrushConverter().ConvertFrom("#808080");
         }
 
-        private void ChatInput_KeyDown(object sender, KeyEventArgs e) {
-            if (e.Key == Key.Enter && ChatInput.Text != "") {
+        private void ChatInput_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter && ChatInput.Text != "")
+            {
                 InsertIntoChat(ChatInput.Text);
                 ChatInput.Text = null;
             }
         }
 
-        private void InsertIntoChat(string str) {
+        private void InsertIntoChat(string str)
+        {
             ChatText.AppendText(str + "\n");
             ChatText.ScrollToEnd();
         }
 
-        private void chatText_TextChanged(object sender, TextChangedEventArgs e) {
+        private void chatText_TextChanged(object sender, TextChangedEventArgs e)
+        {
         }
     }
 
-    public class ContactsPresenter : INotifyPropertyChanged {
+    public class ContactsPresenter : INotifyPropertyChanged
+    {
         private readonly ContactsModel ContactsM;
 
-        public ContactsPresenter() {
+        public ContactsPresenter()
+        {
             ContactsM = new ContactsModel();
             ContactNameList.Add("TestUser");
-
         }
 
-        public ObservableCollection<string> ContactNameList {
+        public ObservableCollection<string> ContactNameList
+        {
             get { return ContactsM.ContactNameList; }
         }
         public ObservableCollection<string> ContactTitleList
@@ -141,11 +166,21 @@ namespace Instance {
         public event PropertyChangedEventHandler PropertyChanged;
     }
 
-    public class ContactsModel : INotifyPropertyChanged {
+    public class ContactsModel
+    {
         public ObservableCollection<string> ContactNameList { get; } = new ObservableCollection<string>();
         public ObservableCollection<string> ContactTitleList { get; } = new ObservableCollection<string>();
         public ObservableCollection<string> ContactStatusList { get; } = new ObservableCollection<string>();
+    }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+    public class Contact
+    {
+        public ObservableCollection<Contact> ContactList { get; }
+
+        public string Name { get; set; }
+        public string Title { get; set; }
+        public string Status { get; set; }
+
+
     }
 }
