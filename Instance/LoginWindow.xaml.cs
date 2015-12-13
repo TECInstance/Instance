@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace Instance {
     public partial class LoginWindow {
@@ -40,7 +41,6 @@ namespace Instance {
             if (RememberUserCheck.IsChecked == true) {
                 var _rememberfileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "UsernameRemembrance.txt");
                 using (var _writefile = new StreamWriter(_rememberfileName)) {
-                    //if the file doesn't exist, create it
                     if (!File.Exists(_rememberfileName)) {
                         File.Create(_rememberfileName);
                     }
@@ -50,7 +50,6 @@ namespace Instance {
 
                 var _userfileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "RememberedUser.txt");
                 using (var _writefile = new StreamWriter(_userfileName)) {
-                    //if the file doesn't exist, create it
                     if (!File.Exists(_userfileName)) {
                         File.Create(_userfileName);
                     }
@@ -61,7 +60,6 @@ namespace Instance {
             else if (RememberUserCheck.IsChecked == false) {
                 var _rememberfileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "UsernameRemembrance.txt");
                 using (var _writefile = new StreamWriter(_rememberfileName)) {
-                    //if the file doesn't exist, create it
                     if (!File.Exists(_rememberfileName)) {
                         File.Create(_rememberfileName);
                     }
@@ -72,12 +70,11 @@ namespace Instance {
 
             if (AuthenticateLogin(UsernameText.Text, PasswordText.Password)) {
                 LoginSuccess = true;
-                MainWindow.InitializeConnection();
+               // MainWindow.InitializeConnection();
                 Close();
             }
             else {
-                //FIND PRETTIER SOLUTION
-                MessageBox.Show("Username and password does not seem to be valid");
+                this.ShowMessageAsync(":(", "Username and password does not seem to be valid");
             }
         }
 

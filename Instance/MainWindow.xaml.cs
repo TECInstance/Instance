@@ -1,14 +1,18 @@
-﻿using System;
+﻿#region HEADERS
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -21,15 +25,21 @@ using System.Windows.Shapes;
 using Instance.Annotations;
 using MahApps.Metro;
 using MahApps.Metro.Controls;
+using System.Windows.Threading;
+using MahApps.Metro.Controls.Dialogs;
+using Timer = System.Timers.Timer;
+#endregion
 
 namespace Instance {
     public partial class MainWindow {
-        public static TcpClient Client = new TcpClient();
+        public static TcpClient TcpSender = new TcpClient();
+        public static TcpListener TcpListener = new TcpListener(IPAddress.Parse(GetLocalIpAddress()), 1337);
+        public bool IsChatting;
         public static bool IsLocked = true;
         public static string InstanceIp = GetLocalIpAddress();
         public static string Username;
         public static Brush DivBrush = (Brush) new BrushConverter().ConvertFrom("#E51400");
-
+        public TcpClient OtherClient;
 
         public MainWindow() {
             var _loginWindow = new LoginWindow();
@@ -49,34 +59,32 @@ namespace Instance {
                     Close();
                 }
             };
+
+            var _timer = new Timer(10);
+            _timer.Elapsed += delegate { Listener(); };
         }
 
-        private ContactsPresenter Presenter {
-            get { return (ContactsPresenter) DataContext; }
-        }
+/*
+        private ContactsPresenter Presenter => (ContactsPresenter) DataContext;
+*/
 
-        public static void InitializeConnection() {
-            try {
-                Client.Connect(IPAddress.Parse(InstanceIp), 1337);
-            }
-            catch (Exception) {
-                MessageBox.Show("Instance Servers seems to be offline, logging in anyway");
+        private void Listener() {
+            TcpListener.Start();
+            if (!IsChatting) {
+                if (TcpListener.Pending()) {
+                    OtherClient = TcpListener.AcceptTcpClient();
+                    ChatText.Text += "New connection!\r\n";
+                    IsChatting = true;
+                }
             }
 
-            if (Client.Connected) {
-                TrySend("INSTANCEINIT " + GetLocalIpAddress() + " " + Username);
-            }
-        }
+            var _clientStream = OtherClient.GetStream();
 
-        private static void TrySend(string str) {
-            try {
-                var _streamclient = Client.GetStream();
-                var _sendBytes = Encoding.ASCII.GetBytes(str);
-
-                _streamclient.Write(_sendBytes, 0, _sendBytes.Length);
-            }
-            catch (Exception) {
-                Debug.WriteLine("Can't connect to server (this is bad)");
+            if (IsChatting) {
+                var _buffer = new byte[50];
+                _clientStream.Read(_buffer, 0, _buffer.Length);
+                ChatText.AppendText(Encoding.ASCII.GetString(_buffer));
+                ChatText.AppendText("\r\n");
             }
         }
 
@@ -103,9 +111,13 @@ namespace Instance {
 
         private void ChatInput_KeyDown(object sender, KeyEventArgs e) {
             if (e.Key == Key.Enter && ChatInput.Text != "") {
-                InsertIntoChat(ChatInput.Text);
+                SendMessage(ChatInput.Text);
                 ChatInput.Text = null;
             }
+        }
+
+        private void SendMessage(string msg) {
+            InsertIntoChat(msg);
         }
 
         private void InsertIntoChat(string str) {
@@ -115,28 +127,34 @@ namespace Instance {
 
         private void chatText_TextChanged(object sender, TextChangedEventArgs e) {
         }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            //try {
+                TcpSender.Connect("192.168.0.254", 1337);
+                var _sendBytes = Encoding.ASCII.GetBytes("Hello there!");
+                TcpSender.GetStream().Write(_sendBytes,0,50);
+            //}
+            //catch (Exception) {
+            //    this.ShowMessageAsync(":(", "Error - Connection Failed!");
+            //}
+        }
     }
 
     public class ContactsPresenter : INotifyPropertyChanged {
-        private readonly ContactsModel ContactsM;
+        private readonly ContactsModel _contactsM;
 
         public ContactsPresenter() {
-            ContactsM = new ContactsModel();
+            _contactsM = new ContactsModel();
             ContactNameList.Add("TestUser");
 
         }
 
-        public ObservableCollection<string> ContactNameList {
-            get { return ContactsM.ContactNameList; }
-        }
-        public ObservableCollection<string> ContactTitleList
-        {
-            get { return ContactsM.ContactTitleList; }
-        }
-        public ObservableCollection<string> ContactStatusList
-        {
-            get { return ContactsM.ContactStatusList; }
-        }
+        public ObservableCollection<string> ContactNameList => _contactsM.ContactNameList;
+
+        public ObservableCollection<string> ContactTitleList => _contactsM.ContactTitleList;
+
+        public ObservableCollection<string> ContactStatusList => _contactsM.ContactStatusList;
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

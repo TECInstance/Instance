@@ -30,23 +30,12 @@
 
         <GridSplitter x:Name="Divider" Grid.Column="1" HorizontalAlignment="Stretch" Background="#FFBE1707" Grid.RowSpan="3" />
 
-        <ListView Grid.Column="0" x:Name="ContactList" BorderBrush="#FF252525" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" Grid.Row="0" Grid.RowSpan="3" ItemsSource="{Binding Path=ContactNameList}">
-          <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <Grid>
-                                <TextBlock Text="{Binding Path=.}" Padding="7,5,0,10" FontSize="16" />
-                                <TextBlock Text="{Binding Path=.}" Padding="7,25,0,0" FontStyle="Italic" Foreground="#FF8D8D8D" />
-                                <Ellipse Fill="#FF00FF00" Width="14" Height="14" Margin="132,18,14,18" HorizontalAlignment="Right" />
-                            </Grid>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
+        <ListView Grid.Column="0" x:Name="ContactList" BorderBrush="#FF252525" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" Grid.Row="0" Grid.RowSpan="3">
+            <Button x:Name="button" Style="{DynamicResource SquareButtonStyle}" Content="Connect" Margin="3,0" BorderThickness="1" Click="button_Click"/>
         </ListView>
         <TextBox Grid.Column="2" Grid.Row="0" x:Name="ChatText" Margin="5,5,5,1" TextWrapping="Wrap"  VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="5,5,5,1" TextChanged="chatText_TextChanged" VerticalScrollBarVisibility="Auto"/>
         <GridSplitter x:Name="ChatSplitter" Grid.Column="2" Grid.Row="1" Background="#FFE6E6E6" MinHeight="1" MaxHeight="1" ResizeDirection="Rows" HorizontalAlignment="Stretch" VerticalAlignment="Center" ResizeBehavior="PreviousAndNext" Height="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,0,0,1"/>
         <TextBox Grid.Column="2" MaxLines="900" Grid.Row="2" x:Name="ChatInput" Margin="5,1,5,5" TextWrapping="Wrap" HorizontalContentAlignment="Stretch" Padding="5,1,5,5" MinHeight="24" KeyDown="ChatInput_KeyDown"/>
-        
     </Grid>
 
 </Controls:MetroWindow>
