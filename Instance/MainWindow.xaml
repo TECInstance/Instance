@@ -28,14 +28,14 @@
             <ColumnDefinition x:Name="ChatColumn" Width="*" />
         </Grid.ColumnDefinitions>
         <GridSplitter x:Name="Divider" Grid.Column="1" HorizontalAlignment="Stretch" Background="#FFBE1707" Grid.RowSpan="3" />
-        <ListView Grid.Column="0" x:Name="ContactList" BorderBrush="#FF252525" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" Grid.Row="0" Grid.RowSpan="3" ItemsSource="{Binding Path=ContactNameList}">
+        <ListView Grid.Column="0" x:Name="ContactListView" BorderBrush="#FF252525" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden" Grid.Row="0" Grid.RowSpan="3" ItemsSource="{Binding Path=ContactList}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <Grid>
-                            <TextBlock Text="{Binding Path=.}" Padding="7,5,0,10" FontSize="16" />
-                            <TextBlock Text="{Binding Path=.}" Padding="7,25,0,0" FontStyle="Italic" Foreground="#FF8D8D8D" />
-                            <Ellipse Fill="#FF00FF00" Width="14" Height="14" Margin="132,18,14,18" HorizontalAlignment="Right" />
+                            <TextBlock Text="{Binding Path=Name}" Padding="7,5,0,10" FontSize="16"/>
+                            <TextBlock Text="{Binding Path=Title}" Padding="7,25,0,0" FontStyle="Italic" Foreground="#FF8D8D8D" />
+                            <Ellipse Fill="{Binding Path=Status}" Width="14" Height="14" Margin="132,10,14,18" HorizontalAlignment="Right" />
                         </Grid>
                     </StackPanel>
                 </DataTemplate>

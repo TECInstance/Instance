@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -30,17 +32,19 @@ namespace Instance
         public static bool IsLocked = true;
         public static string InstanceIp = GetLocalIpAddress();
         public static string Username;
+        public static string EllipseColour = "#FF00FF00";
         public static Brush DivBrush = (Brush) new BrushConverter().ConvertFrom("#E51400");
+        private ObservableCollection<Contact> _ContactList = new ObservableCollection<Contact>();
+        public ObservableCollection<Contact> ContactList => _ContactList;
 
         public MainWindow()
         {
             var _loginWindow = new LoginWindow();
             Hide();
             _loginWindow.Show();
-            
-            InitializeComponent();
+            LoadContacts();
 
-            DataContext = new ContactsPresenter();
+            InitializeComponent();
 
             _loginWindow.Closed += delegate
             {
@@ -57,9 +61,50 @@ namespace Instance
             };
         }
 
-        private ContactsPresenter Presenter
-        {
-            get { return (ContactsPresenter)DataContext; }
+        private void LoadContacts () {
+            const string connectionString = @"Data Source=80.198.77.171,1337; Initial Catalog=Instance; User Id = InstanceLogin; Password = password";
+
+            using (var _con = new SqlConnection(connectionString))
+            {
+                var _dt = new DataTable();
+                try
+                {
+                    _con.Open();
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Connection failed");
+                }
+
+                var _command = new SqlCommand("select * from logins", _con);
+                var _dr = _command.ExecuteReader();
+                _dt.Load(_dr);
+
+                foreach (DataRow _row in _dt.Rows) {
+                    if (_row.Field<string>("status") == "Offline")
+                    {
+                        EllipseColour = "#424242";
+                    }
+                    else
+                    {
+                        EllipseColour = "#FF00FF00";
+                    }
+
+                    _ContactList.Add(new Contact
+                    {
+                        Name = _row.Field<string>("usernames"),
+                        Title = _row.Field<string>("title"),
+                        Status = EllipseColour
+                    });
+
+                    if (_row.Field<string>("status") == "Offline") {
+                        EllipseColour = "#424242";
+                    }
+                    else {
+                        EllipseColour = "#FF00FF00";
+                    }
+                }
+            }
         }
 
         public static void InitializeConnection()
@@ -140,47 +185,10 @@ namespace Instance
         }
     }
 
-    public class ContactsPresenter : INotifyPropertyChanged
-    {
-        private readonly ContactsModel ContactsM;
-
-        public ContactsPresenter()
-        {
-            ContactsM = new ContactsModel();
-            ContactNameList.Add("TestUser");
-        }
-
-        public ObservableCollection<string> ContactNameList
-        {
-            get { return ContactsM.ContactNameList; }
-        }
-        public ObservableCollection<string> ContactTitleList
-        {
-            get { return ContactsM.ContactTitleList; }
-        }
-        public ObservableCollection<string> ContactStatusList
-        {
-            get { return ContactsM.ContactStatusList; }
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-    }
-
-    public class ContactsModel
-    {
-        public ObservableCollection<string> ContactNameList { get; } = new ObservableCollection<string>();
-        public ObservableCollection<string> ContactTitleList { get; } = new ObservableCollection<string>();
-        public ObservableCollection<string> ContactStatusList { get; } = new ObservableCollection<string>();
-    }
-
     public class Contact
     {
-        public ObservableCollection<Contact> ContactList { get; }
-
         public string Name { get; set; }
         public string Title { get; set; }
         public string Status { get; set; }
-
-
     }
 }
