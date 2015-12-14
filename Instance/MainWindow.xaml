@@ -41,7 +41,7 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListView>
-        <TextBox Grid.Column="2" Grid.Row="0" x:Name="ChatText" Margin="5,5,5,1" TextWrapping="Wrap"  VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="5,5,5,1" TextChanged="chatText_TextChanged" VerticalScrollBarVisibility="Auto"/>
+        <TextBox Grid.Column="2" Grid.Row="0" x:Name="ChatText" Margin="5,5,5,1" TextWrapping="Wrap"  VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" Padding="5,5,5,1" IsReadOnly="True" VerticalScrollBarVisibility="Auto"/>
         <GridSplitter x:Name="ChatSplitter" Grid.Column="2" Grid.Row="1" Background="#FFE6E6E6" MinHeight="1" MaxHeight="1" ResizeDirection="Rows" HorizontalAlignment="Stretch" VerticalAlignment="Center" ResizeBehavior="PreviousAndNext" Height="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="0,0,0,1"/>
         <TextBox Grid.Column="2" MaxLines="900" Grid.Row="2" x:Name="ChatInput" Margin="5,1,5,5" TextWrapping="Wrap" HorizontalContentAlignment="Stretch" Padding="5,1,5,5" MinHeight="24" KeyDown="ChatInput_KeyDown"/>
     </Grid>

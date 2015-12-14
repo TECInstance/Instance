@@ -10,6 +10,8 @@ namespace Instance {
             InitializeComponent();
         }
 
+        // All following functions changes colourscheme of the entire application
+
         private void RedTile_Clicked(object sender, RoutedEventArgs e) {
             ThemeManager.ChangeAppStyle(Application.Current, ThemeManager.GetAccent("Red"), ThemeManager.GetAppTheme("BaseDark"));
             MainWindow.DivBrush = GlowBrush;
