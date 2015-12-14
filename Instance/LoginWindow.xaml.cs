@@ -18,11 +18,9 @@ namespace Instance {
             var file = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "UsernameRemembrance.txt");
 
             // If file exists and file says true, set bool UsernameRemembrance to true
-            if (File.Exists(file))
-            {
+            if (File.Exists(file)) {
                 var rememberfileName = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "UsernameRemembrance.txt");
-                using (var readfile = new StreamReader(rememberfileName))
-                {
+                using (var readfile = new StreamReader(rememberfileName)) {
                     UsernameRemembrance = readfile.ReadLine() == "true";
                 }
             }
@@ -108,7 +106,7 @@ namespace Instance {
                 try {
                     con.Open();
                 }
-                // If connection cannot be established, show error
+                    // If connection cannot be established, show error
                 catch (Exception) {
                     MessageBox.Show("Connection failed");
                 }

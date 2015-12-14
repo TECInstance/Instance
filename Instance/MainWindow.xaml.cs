@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -26,7 +25,7 @@ namespace Instance {
             LoadContacts(); // Generates all contacts in ListView
 
             InitializeComponent(); // Generates contents of MainWindow
-            
+
             // When LoginWindow is closed, it checks if login has been successful
             loginWindow.Closed += delegate {
                 if (loginWindow.LoginSuccess) {
@@ -53,7 +52,7 @@ namespace Instance {
                 try {
                     con.Open();
                 }
-                // If no connection can be established show error
+                    // If no connection can be established show error
                 catch (Exception) {
                     MessageBox.Show("Connection failed");
                 }
